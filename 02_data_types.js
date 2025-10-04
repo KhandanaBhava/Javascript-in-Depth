@@ -1,5 +1,6 @@
 // Primitive data types-> number,string,null,undefined,symbol,boolean.
 // Non primitive -> object
+//ECMA script defines Javascript standards
 
 let name="aratrik" // string
 
