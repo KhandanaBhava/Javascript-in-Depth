@@ -27,5 +27,7 @@ const min = 20
 
 const max = 30
 
-console.log(Math.floor((Math.random()*(max-min))+1)+min) // This will give value from 20 to 30 ( both inclusive )
+console.log(Math.floor((Math.random()*(max-min))+1)+min) // This will give value from 21 to 30 ( both inclusive )
+
+// If we want value from 20 to 30 we should omit the +1
 
