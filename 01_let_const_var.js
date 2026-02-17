@@ -28,6 +28,8 @@ console.log(roll)
     let age =15 // block scope
 
     var roll = 8 //function scope (In this case global as no function is there)
+
+    roll = 9
     
     console.log(age)
 }
