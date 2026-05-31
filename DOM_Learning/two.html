@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DOM | Chai aur code</title>
+</head>
+<body style="background-color: #212121; color: #fff;">
+    <div class="parent">
+        <!-- this is a comment -->
+        <div class="day">Monday</div>
+        <div class="day">Tuesday</div>
+        <div class="day">Wednesday</div>
+        <div class="day">Thursday</div>
+    </div>
+</body>
+<script>
+    const parent = document.querySelector('.parent') //We access class with . in querySelector
+     console.log(parent);
+     console.log(parent.children); // This gives HTML Collection
+     console.log(parent.children[1].innerHTML); // This gives Tuesday as only it is present inside the div
+     console.log(parent.children[1].outerHTML); // This gives : <div class="day">Tuesday</div>
+
+     // On HTML Collection we can't use forEach but we can use normal for loops, like we do in arrays
+
+    for (let i = 0; i < parent.children.length; i++) {
+         console.log(parent.children[i].innerHTML);
+        }
+
+        // The above for loop gives Monday,Tuesday,Wednesday,Thursday
+
+    parent.children[1].style.color = "orange"
+    console.log(parent.firstElementChild); //First element of parent
+    console.log(parent.lastElementChild);  //Last element of parent
+
+    //Query selector is an expensive opeartion as it involves tree traversal of the entire DOM
+
+    const dayOne = document.querySelector('.day')
+    console.log(dayOne);
+    console.log(dayOne.parentElement); // To travel parent element from child
+    console.log(dayOne.nextElementSibling); //Tuesday
+
+    console.log("NODES: ", parent.childNodes); 
+    // childNodes gives a NodeList which in itself is a DOM (tree structure)
+    
+    // This includes all the characters from start to end of the particular div
+
+    // In this case it is 11 as it counts line breaks as well. So one line break after div , comment and each day = 6 line breaks
+
+    // and 5 text lines (i.e 4 days and 1 comment) so 6+5 = 11
+
+    // It only counts 1 line break after div. Any number of line breaks after the first line break are not counted
+
+</script>
+</html>

@@ -1,0 +1,90 @@
+document.getElementById('title')
+
+document.getElementById('title').id;
+
+document.getElementById('title').className; -- For accessing class we write className
+
+document.getElementById('title').getAttribute('class') -- Same as above but when we use getAttribute function we can use class instead of className
+
+document.getElementById('title').getAttribute('id'); -- Another way of accessing id
+
+const title=document.getElementById('title') -- This is how we can change a particular content in a page
+
+title.style.padding='50px'
+
+title.style.borderRadius='30px';
+
+title.style.backgroundColor='green';
+
+title.setAttribute('title','test') -- Overwrites the title(which is the id) to test
+
+title.setAttribute('heading','bat')-- Overwrites the heading(which is the class) to bat
+
+titile.textContent -- Gives the entire content inside the id,whether visible or hidden ('DOM learning on Chai aur code test text') 
+
+title.innerHTML -- Gives the entire HTML value alongwith HTML tags (within h1 int his case)  unlike textContent and innerText
+
+title.innerText -- Gives only the visible content ('DOM learning on Chai aur code')
+
+document.getElementByClassName('heading') -- Same as getElementById except it fetches the className i.e heading in this case
+
+-- Qyery Selector has the same syntax as that of CSS Selectors
+
+document.querySelector('h2') -- Gives the first h2(the entire HTML) only and not all the h2's
+
+-- Query Selector  ()
+
+document.querySelector('#title') -- Gives the entire html where id is title
+
+document.querySelector('.heading') -- Gives the entire html where class is heading
+
+document.querySelector('input[type="password"]') -- Gives the entire html where input type is password
+Ouput of the above code -- <input type="password" name id>
+
+document.querySelector(p:first-child) --First child of paragraph
+
+-- Changing colour of the first li element to green
+
+const myUL=document.querySelector('ul')
+
+const myLi = myUL.querySelector('li')
+
+myLi.style.backgroundColor='green'
+
+-- Changing first li element from one to five
+
+myLi.innerText='five'
+
+-- Query Selector All (Returns NodeList)
+
+-- Changing the third li element's colour to blue
+
+const tempList = document.querySelectorAll('li') -- This gives a NodeList ( not an array). NodeList has for each like arrays but not maps
+
+tempList[2].style.backgroundColor="blue" -- As it is a NodList we need to mention the index of the element which we want to change
+
+-- Even if the the NodList has only one element we still need to mention the index. Example below
+
+const myH1 =document.querySelectorAll('h1') -- This returns a node list having only 1 element 
+
+myH1[0].style.backgroundColor="pink" -- Still we need to give the index of the NodeList
+
+-- Changing the colour of all li elements using for each loop
+
+tempList.forEach((l)=>{
+    l.style.backgroundColor='red' -- forEach takes a callback
+})
+
+-- To use map we need to convert NodeList to Array
+
+-- getElementByClassName : this returns an HTML Collection which does not have forEach like NodeList. So we need to convert HTML
+Collection to Array
+
+--document.getElementsByClassName('list-item') --> This returns an HTML Collection
+
+-- Converting HTML Collection to Array
+
+const myArr=Array.from(document.getElementsByClassName('list-item')) -- Array.from is used to convert
+
+-- myArr.forEach((l)=>{
+        l.style.color='orange'})

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chai aur code </title>
+</head>
+<body style="background-color: #212121; color: #fff;">
+    
+</body>
+<script>
+
+    const colors=["red","blue","green","orange","pink"]
+
+    const names =["ram","madhu","mohan","rohit","shyam"]
+
+    const create_div=(color,name)=>{
+
+    const div = document.createElement('div')
+    console.log(div);
+    div.className = "main"
+    div.id = Math.round(Math.random() * 10 + 1)
+    div.setAttribute("title", "generated title")
+    div.style.backgroundColor = color
+    div.style.padding = "12px"
+    // div.innerText = `${name}`
+    const addText = document.createTextNode(name)
+    div.appendChild(addText)
+
+    document.body.appendChild(div)
+    }
+
+    for(let i=0;i<colors.length;i++)
+    {
+        create_div(colors[i],names[i])
+    }
+    
+// Using div.innerText = name is generally less costly (more efficient) in this specific scenario, but for reasons that might surprise you.
+
+// Here is the breakdown of why, how they work under the hood, and a third option that actually beats both.
+
+// 1. div.innerText = name (Winner)
+// When you assign a string to innerText, the browser simply overwrites the text content of that element.
+
+// Why it's faster here: If the div is newly created and completely empty, setting innerText is a highly optimized, direct operation.
+
+// 2. document.createTextNode(name) + appendChild() (More Costly)
+// This approach takes two distinct steps:
+
+// document.createTextNode(name) allocates memory and creates a whole new Node object in the DOM tree.
+
+// div.appendChild(...) modifies the DOM tree structure to link that new node to your div.
+
+// Because it involves explicitly creating a new object and executing two separate JavaScript operations, it carries slightly more overhead.
+
+// The Hidden Trap: innerText vs. textContent
+// While innerText is faster than creating a text node for an empty div, innerText has a performance flaw when used on elements already visible on the page.
+
+// innerText cares about layout and CSS styling (for example, it won't show text if it's hidden with CSS). Because of this, the browser sometimes has to recalculate the page layout (a process called reflow) just to read or write it.
+
+//So for your code , it is best and fastest to use textContent as it directly injects raw text into the DOM without checking CSS or layout
+
+
+</script>
+</html>
+

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chai aur code | DOM</title>
+</head>
+<body style="background-color: #212121; color: #fff;">
+    <ul class="language">
+        <li>Javascript</li>
+    </ul>
+</body>
+<script>
+    function addLanguage(langName){
+        const li = document.createElement('li');
+        li.innerHTML = langName
+        document.querySelector('.language').appendChild(li)
+    }
+    addLanguage("python")  
+    addLanguage("typescript") 
+
+    // Optimal Way
+
+    function addOptiLanguage(langName){
+        const li = document.createElement('li');
+        li.appendChild(document.createTextNode(langName))
+        document.querySelector('.language').appendChild(li)
+    }
+    addOptiLanguage('golang')
+
+//     Why addOptiLanguage Wins (The Breakdown)
+// Approach 1: li.innerHTML = langName (Less Optimal)
+// When you pass "python" to innerHTML, the browser doesn't just look at it as text.
+
+// It has to spin up its full HTML Parser Engine.
+
+// The parser scans the string to see if there are any HTML tags (like <strong> or <span>).
+
+// Even though "python" is just plain text, the browser wasted time running it through the parser engine.
+
+// Approach 2: li.appendChild(document.createTextNode(langName)) (More Optimal)
+// When you use createTextNode, you are speaking the browser's native language.
+
+// You explicitly tell the browser: "Hey, this is strictly text. Do not look for HTML tags."
+
+// The browser bypasses the HTML parser completely and instantly creates the text node.
+
+// The "Even More Modern" Optimal Way 🚀
+// While addOptiLanguage is great, you can make it even cleaner and just as fast. Instead of manually creating a text node and appending it, you can use textContent.
+
+//Most Optimal Way
+
+function addMostOptiLanguage(langName) {
+    const li = document.createElement('li');
+    
+    // Fast like createTextNode, but cleaner to write!
+    li.textContent = langName; 
+    
+    document.querySelector('.language').appendChild(li);
+}
+
+addMostOptiLanguage('solidity') // solidity is removed at the end using remove()
+
+    //Edit
+    const secondLang = document.querySelector("li:nth-child(2)")
+    console.log(secondLang);
+    //secondLang.innerHTML = "Mojo"
+    const newli = document.createElement('li')
+    newli.textContent = "Mojo"
+    secondLang.replaceWith(newli)
+
+    //edit
+    const firstLang = document.querySelector("li:first-child")
+    firstLang.outerHTML = '<li>Ruby</li>'
+
+    //remove
+    const lastLang = document.querySelector('li:last-child')
+    lastLang.remove() // This removes solidity 
+
+
+</script>
+</html>
