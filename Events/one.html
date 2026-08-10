@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>htnml Events </title>
+</head>
+<body style="background-color: #414141; color: aliceblue;">
+    <h2>Amazing image</h2>
+    <div >
+        <ul id="images">
+            <li><img width="200px" id="photoshop" src="https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt="photoshop"></li>
+            <li><img width="200px" id="japan" src="https://images.pexels.com/photos/3532553/pexels-photo-3532553.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
+            <li><img width="200px" id="river" src="https://images.pexels.com/photos/3532551/pexels-photo-3532551.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
+            <li><img width="200px" id="owl" src="https://images.pexels.com/photos/3532552/pexels-photo-3532552.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt="" ></li>
+            <li><img width="200px" id="prayer" src="https://images.pexels.com/photos/2522671/pexels-photo-2522671.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
+            <li><a style="color: aliceblue;" href="https://google.com" id="google">Google</a></li>
+        </ul>
+   </div>
+</body>
+<script>
+//Most js events run sequentially except a few exceptions. Events are invoked on some activity
+//Events can be injected in html itself but its not a good approach for scalability
+
+// document.getElementById('owl').onclick=function(){
+//     alert("owl clicked")
+// } This approach is fine but onclick gives less features. So we use event listener which gives propagation feature
+
+document.getElementById('owl').addEventListener('click',function(e){
+    console.log(e) // there are various events which we can see once owl is clicked as we have used click here
+    alert("owl clicked")
+},false)
+//third parameter is false by default so it is not mandatory to mention it unless we want it to be true
+
+//Learn about the following events
+
+ // type, timestamp, preventDefault
+    // target, toElement, srcElement, currentTarget,
+    // clientX, clientY, screenX, screenY
+    // altkey, ctrlkey, shiftkey, keyCode
+
+// Events Interview Questions
+// Q-1 Make an application that tells us the timestamp,view,width,hight of the image/body that the user clicks
+// Q-2 Make an application in which whenever the user clicks on a div , a circle is created (we know the x and y position from event)
+
+    //Event Propagation - when 3rd parameter is false(default) : event bubbling 
+                          //when 3rd parameter is true : event capturing
+
+document.getElementById('images').addEventListener('click',function(e){
+    console.log('inside ul') 
+},false)
+
+document.getElementById('owl').addEventListener('click',function(e){
+    console.log('owl clicked')
+    //e.stopPropagation() 
+},false)
+
+//whenever we click any other image except owl that is part of the ul, inside ul is printed
+//But when we click owl, first owl clicked is printed and then inside ul (as it is also part of the ul)....this is event propagation
+// This is event bubbling which occurs when we write false or don't write the 3rd parameter at all (3rd parameter is false by default)
+
+//stopPropagation ensures that bubbling up or event capturing doesn't occur as it stops the propagation
+
+//If we wrote true as 3rd parameter,then event capturing would occur and isnide ul would be printed before owl clicked
+
+document.getElementById('google').addEventListener('click',function(e){
+    e.preventDefault() // It prevents the default behaviour (prevents redirect to a link in this case)
+},false)
+
+//Q- Whenever we click on an image , it should dissappear
+
+document.getElementById('images').addEventListener('click',function(e){
+    console.log(e.target)
+    console.log(e.target.tagName)
+    console.log(e.target.id)
+
+    if(e.target.tagName==='IMG') // it is needed as we want to remove the image only when it is clicked not when we clcik somewhere else
+
+    // without this if we click somehwere else in the li then we get the parent node of li which is ul and so the entire ul dissappears
+
+    // with this check we get the parent node of the image which is the li and hence the li disappears and not the ul
+{
+    let removeIt=e.target.parentNode
+    removeIt.remove()
+}
+
+},false)
+
+
+</script>
+</html>
