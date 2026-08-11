@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello</h1>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+</body>
+<script>
+
+    let intervalId // declaring it in global scope so that it can be accesed by #stop
+
+    document.querySelector('#start').addEventListener('click',function(){
+        const sayDate=function(str,number){
+        console.log(str,Date.now(),number)
+    }
+     intervalId=setInterval(sayDate,2000,'hi',5) // passing two arguments
+    },false)
+    
+    document.querySelector('#stop').addEventListener('click',function(){
+        clearInterval(intervalId)
+    },false)
+
+    // The update is happening inside #start so the updated value should't be read by #stop.....Why it works ? (Lexical scoping)
+
+   // One Shared Box: Think of the global intervalId as a physical box sitting in your living room. 
+    //Both the #start and #stop functions know exactly where this box is.
+    // The Start Action: When you click #start, the code goes to that specific box and places a number inside it (e.g., 101).
+    // The Stop Action: When you click #stop, the code goes to that very same box and looks inside. Because it is a live, shared box, it
+    // sees the number 101 that #start just placed there.
+
+   // Lexical Scoping in action
+
+   //Because both functions point to the exact same memory location for intervalId, any changes made by one function are 
+   // immediately visible to the other.
+    
+
+</script>
+</html>
