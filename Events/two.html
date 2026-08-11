@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Aratrik's World</h1>
+    <button id="stop">Stop</button>
+</body>
+<script>
+    setTimeout(function(){ //It has an handler(callback function) and time in milli seconds..we can pass the function or reference to it
+        console.log("Aratrik")
+    },2000) //It is a function but it calls an API. It is not a part of core js but is available through  browser
+    //Calling setTimeout interacts directly with a built-in browser or runtime API, but it does not make a network or web server API call by itself
+
+    //setTimeout and setInterval can take infinite number of arguments but the function and the delay(time) are mandatory
+
+    const changeText=function(){
+        document.querySelector('h1').innerHTML='Mukherjee'
+    }
+
+    const change=setTimeout(changeText,4000) //Passing reference of changeText function...This will change to Mukherjee after every 4s
+
+    //clearTimeout always needs reference of the setTimeout that we want to remove
+
+    // Using clearTimeout on clicking stop
+
+    document.querySelector('#stop').addEventListener('click',function(){
+            clearTimeout(change)
+    },false)
+
+</script>
+</html>
