@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Background Colour Change</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body style="background-color: #212121; color: #fff">
+ 
+   <h1>Start should change the Background color every second</h1>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+    </body>
+</html>
+
+<script>
+    //To generate random colour
+
+    const randomColor=()=>{
+        const hex='0123456789ABCDEF'
+        let color='#'
+
+        //hexacode colors are of 7 characters and the first character is always #
+
+        for(let i=0;i<6;i++){
+
+            color += hex[Math.floor(Math.random()*16)] //Take any random position of hex 6 times and append with # to get a color
+        } 
+
+        return color
+    }
+
+    const changeBgColor=()=>{
+
+        document.body.style.backgroundColor = randomColor() 
+    }
+
+    let changeColorId = null
+
+    const start=()=>{
+
+        if(changeColorId===null) //Edge Case
+        {
+            changeColorId = setInterval(changeBgColor,1000)
+        }
+        
+    }
+
+    const stop=()=>{
+        clearInterval(changeColorId)
+
+        changeColorId=null  //Edge Case
+    }
+
+    document.querySelector('#start').addEventListener('click',()=>{
+        start()
+    })
+
+    document.querySelector('#stop').addEventListener('click',()=>{
+        stop()
+    })
+
+    //What happens if edge case is not handled
+
+//Every time you call setInterval(), the browser starts a background timer and gives it a unique ID number (like #101, #102, etc.).
+
+// 1. First Click on "Start"
+// setInterval() creates Timer #101.
+
+// changeColorId becomes 101.
+
+// Result: Background changes color every 1 second. Everything works as expected.
+
+// 2. Second Click on "Start" (Without clicking Stop first)
+// setInterval() creates Timer #102.
+
+// changeColorId gets overwritten with 102.
+
+// The Problem: Timer #101 is STILL running in the background!
+
+// Result: You now have two active timers changing colors at the same time. The background starts flashing faster and erratically.
+
+// 3. Third Click on "Start"
+// setInterval() creates Timer #103.
+
+// changeColorId gets overwritten with 103.
+
+// Result: Now three timers (#101, #102, #103) are running concurrently.
+
+// 4. Now Click "Stop"
+// clearInterval(changeColorId) executes clearInterval(103).
+
+// Timer #103 stops, but Timers #101 and #102 keep running forever!
+
+// Why? Because changeColorId only held the ID for the last timer (103). The browser lost the references to #101 and #102, so 
+// clicking Stop will never be able to stop them.
+
+// Try This Quick Experiment
+// Open your code in the browser.
+
+// Click Start 5 times quickly.
+
+// Notice how fast and rapidly the colors change (5 timers running at once).
+
+// Click Stop once.
+
+// Notice that the background keeps changing colors and won't stop no matter how many times you click Stop.
+
+</script>
