@@ -1,0 +1,99 @@
+// url: 'https://randomuser.me/api/'
+
+// https://jsonformatter.org/ ( for viewing the API in tree structure for better understanding )
+
+// AJAX (asynchronous js and XML) - XMLHttpRequest
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: #212121;">
+
+Satets      Values                  Description
+
+0	        UNSENT	                Client has been created. open() not called yet.
+1	        OPENED	                open() has been called.
+2	        HEADERS_RECEIVED	    send() has been called, and headers and status are available.
+3	        LOADING	                Downloading; responseText holds partial data.
+4	        DONE	                The operation is complete.
+</body>
+<script>
+    const requestUrl = 'https://api.github.com/users/hiteshchoudhary'
+
+    const xhr = new XMLHttpRequest(); // AJAX request : XMLHttpRequest has the states and new keyword is used to make a fresh object
+
+    xhr.open('GET', requestUrl) // This is how request is send . Open is not called automatically 
+
+    xhr.onreadystatechange = function(){ // It is used to track the state
+
+        console.log(xhr.readyState);
+
+        // We see 2, 3, 4 in console because of when listener was attached. 
+        // The onreadystatechange handler was defined after xhr.open() was executed, 
+        // so the transition to State 1 had already happened before the code started listening.
+
+        // State 0: Exists instantly upon new XMLHttpRequest(). No event listener exists yet to catch it.
+
+        //State 1: Triggered when xhr.open() runs. Because xhr.onreadystatechange = function... was placed below xhr.open(), 
+        // the event fired before your listener was attached.
+
+        //States 2, 3, 4: Triggered after xhr.send() starts processing the HTTP round-trip on the network.
+
+        if (xhr.readyState === 4) {
+
+            console.log(this.responseText) // this is used to refer to the current context
+
+            console.log(this.responseText.followers) // this will be undefined
+
+            const data = JSON.parse(this.responseText) // Whenever response comes from an URL it mostly comes as a string
+
+            // JSON.parse is used to convert string to object
+
+            console.log(typeof data);
+
+            console.log(data.followers);
+        }
+    }
+    xhr.send(); // opened is only called when send is called
+</script>
+</html>
+
+// Working of Node and V8 Engine taking console.log() as example
+
+//ECMAScript is the specification of the JavaScript language, so things like variables, functions, objects, arrays, promises, etc. 
+are defined by ECMAScript, but console.log() is not part of ECMAScript; it is a host/runtime API provided by environments such as 
+browsers and Node.js. 
+
+V8 is Google's JavaScript engine, written largely in C++, whose job is to understand and execute JavaScript according to the ECMAScript
+specification. When V8 developers want to add engine functionality, they implement the underlying behavior in native code (primarily C++)
+and then create the necessary bindings/internal interfaces so that JavaScript code can access that functionality. 
+Node.js then embeds V8 and can similarly implement functionality in C/C++, connect that native functionality to V8 through V8's 
+APIs/bindings, and expose it as JavaScript objects, functions, or modules. 
+
+For example, Node can have native code underneath an API such as fs.readFile(), while JavaScript developers simply call fs.readFile(); 
+the binding acts as the bridge between JavaScript and native code. 
+
+For example, when you run:
+
+console.log("Hello");
+
+Node starts its runtime, initializes V8, gives V8 your JavaScript code, and V8 executes that JavaScript. But console.log itself is 
+provided by the runtime environment rather than being an ECMAScript language feature.
+
+The important part is how Node can communicate with V8. V8 provides a C++ API that allows an embedding application to create a 
+V8 engine/isolate, create JavaScript contexts, execute JavaScript, and expose native C++ functionality to JavaScript. 
+Node.js uses those V8 APIs.
+
+For example, Node might implement some functionality in C++, connect that functionality to V8 using V8's embedding/binding mechanisms, 
+and expose a JavaScript-facing API. That is what makes Node's native capabilities accessible from JavaScript.
+
+So the overall picture is: ECMAScript defines the language → V8 implements and executes that language → V8/Node developers implement 
+lower-level functionality in C/C++ → bindings expose selected functionality to JavaScript → Node.js packages those capabilities 
+into a runtime API → JavaScript developers use the API without needing to know the underlying C/C++ implementation. 
+The important distinction is that V8's C++ functionality and Node's C++ functionality are not automatically exposed to JavaScript; 
+developers explicitly decide what to expose and create the appropriate bindings/API for it.
+
